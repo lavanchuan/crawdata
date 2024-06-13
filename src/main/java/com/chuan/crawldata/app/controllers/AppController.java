@@ -10,6 +10,11 @@ public class AppController {
     boolean running;
     AppRun app;
 
+    @GetMapping("/start-test")
+    String startTest(){
+        return "start-test";
+    }
+
     @GetMapping("/start")
     String start() {
         if (!running) {
