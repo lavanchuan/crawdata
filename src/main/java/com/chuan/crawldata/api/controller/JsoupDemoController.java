@@ -15,11 +15,11 @@ public class JsoupDemoController {
 
     StoryService storyService = new StoryService();
 
-    @GetMapping("/story")
-    public ResponseEntity<?> storyPage(@RequestParam(name = "name") String name,
-            @RequestParam(name = "chapter") int chapter) {
-        return storyService.getStoryChapter(name, chapter);
-    }
+//    @GetMapping("/story")
+//    public ResponseEntity<?> storyPage(@RequestParam(name = "name") String name,
+//            @RequestParam(name = "chapter") int chapter) {
+//        return storyService.getStoryChapter(name, chapter);
+//    }
 
     @GetMapping("/name")
     public String chapter(@RequestParam(name = "name") String name,
