@@ -27,6 +27,13 @@ public class StoryController {
         return storyService.loadStory(request);
     }
 
+    @GetMapping("/story-load-vtct")
+    public ResponseEntity<?> storyLoadVTCT() {
+        StoryLoadRequest request = new StoryLoadRequest();
+        request.setStoryName("vu than chua te");
+        return storyService.loadStory(request);
+    }
+
     @GetMapping("/chapter")
     public String chapter(@RequestParam(name = "name", defaultValue = "vu than chua te") String name,
                                      @RequestParam(name = "chapter", defaultValue = "1") int chapter){
