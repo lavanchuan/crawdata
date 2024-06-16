@@ -75,16 +75,13 @@ public class TestStoryController {
     }
 
     @GetMapping("/get-path")
-    public ResponseEntity<?> getPath(){
+    public ResponseEntity<?> getPath(@RequestParam(name = "fileName") String fileName){
         // Lấy đường dẫn tương đối của file Main.java
-        Path relativePath = Paths.get("error.html");
-        String relativeFilePath = relativePath.toAbsolutePath().toString();
+        Path relativePath = Paths.get(fileName);
 
+        System.out.println("Đường dẫn: " + relativePath);
 
-
-        System.out.println("Đường dẫn tương đối của file Main.java: " + relativeFilePath);
-
-        return ResponseEntity.ok(relativeFilePath);
+        return ResponseEntity.ok(relativePath);
     }
 
 }
