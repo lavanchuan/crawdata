@@ -62,15 +62,14 @@ public class TestStoryController {
             for(File f : file.listFiles()){
                 if(!f.isDirectory()) {
                     if(name.equals(f.getName())) res.add(url);
-                    System.out.println(f.getName());
                 } else {
                     if(url.equals("/")) url = url + f.getName();
                     else url = url + "/" + f.getName();
                     findPathMethod(url, name, res);
                 }
                 url = root;
-                System.out.println("\n");
             }
+            System.out.println(res);
         } catch (Exception e) {
             System.err.println("ERROR");
         }
