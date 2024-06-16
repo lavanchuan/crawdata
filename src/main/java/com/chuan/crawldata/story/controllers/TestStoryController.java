@@ -31,6 +31,13 @@ public class TestStoryController {
         String fullPath = path;
         try {
             File file = new File(fullPath);
+            if(file.exists()) {
+                System.out.println("PATH:");
+                Path p = Paths.get(fullPath);
+                System.out.println(p);
+
+                System.out.println("/PATH");
+            }
             return file.exists() ? "exists" : "not-exists";
         } catch (Exception e) {
             return "error";
