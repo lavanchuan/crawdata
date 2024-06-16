@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/story/test")
@@ -41,6 +43,36 @@ public class TestStoryController {
             return ResponseEntity.ok(res);
         } catch (Exception e) {
             throw new RuntimeException();
+        }
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<?> findPath(@RequestParam(name = "name") String name){
+        List<String> res = new ArrayList<>();
+
+        findPathMethod("/", name, res);
+
+        return ResponseEntity.ok(res);
+    }
+
+    private void findPathMethod(String url, String name, List<String> res){
+        try {
+            File file = new File(url);
+            String root = url;
+            for(File f : file.listFiles()){
+                if(!f.isDirectory()) {
+                    if(name.equals(f.getName())) res.add(url);
+                    System.out.println(f.getName());
+                } else {
+                    if(url.equals("/")) url = url + f.getName();
+                    else url = url + "/" + f.getName();
+                    findPathMethod(url, name, res);
+                }
+                url = root;
+                System.out.println("\n");
+            }
+        } catch (Exception e) {
+            System.err.println("ERROR");
         }
     }
 
