@@ -1,5 +1,10 @@
 package com.chuan.crawldata.story.controllers;
 
+import jakarta.servlet.ServletContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,10 +13,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/story/test")
 public class TestStoryController {
+
+    @Autowired
+    ServletContext servletContext;
 
     @GetMapping("/direct-exists")
     public String directExists(@RequestParam(name = "path", defaultValue = "story") String path){
@@ -60,6 +72,19 @@ public class TestStoryController {
         } catch (Exception e) {
             return "error";
         }
+    }
+
+    @GetMapping("/get-path")
+    public ResponseEntity<?> getPath(){
+        // Lấy đường dẫn tương đối của file Main.java
+        Path relativePath = Paths.get("error.html");
+        String relativeFilePath = relativePath.toAbsolutePath().toString();
+
+
+
+        System.out.println("Đường dẫn tương đối của file Main.java: " + relativeFilePath);
+
+        return ResponseEntity.ok(relativeFilePath);
     }
 
 }
