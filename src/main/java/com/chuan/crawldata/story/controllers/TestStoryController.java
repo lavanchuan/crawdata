@@ -26,21 +26,21 @@ public class TestStoryController {
     ServletContext servletContext;
 
     @GetMapping("/direct-exists")
-    public String directExists(@RequestParam(name = "path", defaultValue = "story") String path){
+    public ResponseEntity<?> directExists(@RequestParam(name = "path", defaultValue = "story") String path){
 //        String fullPath = "src/main/resources/templates/" + path;
         String fullPath = path;
         try {
             File file = new File(fullPath);
+            String res = "---";
             if(file.exists()) {
-                System.out.println("PATH:");
-                Path p = Paths.get(fullPath);
-                System.out.println(p);
-
-                System.out.println("/PATH");
+                for(File f : file.listFiles()) {
+                    if(f.isDirectory()) res = f.getName() + "\n" + res;
+                    else res += "\n" + f.getName();
+                }
             }
-            return file.exists() ? "exists" : "not-exists";
+            return ResponseEntity.ok(res);
         } catch (Exception e) {
-            return "error";
+            throw new RuntimeException();
         }
     }
 
