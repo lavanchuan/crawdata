@@ -15,7 +15,8 @@ public class TestStoryController {
 
     @GetMapping("/direct-exists")
     public String directExists(@RequestParam(name = "path", defaultValue = "story") String path){
-        String fullPath = "src/main/resources/templates/" + path;
+//        String fullPath = "src/main/resources/templates/" + path;
+        String fullPath = path;
         try {
             File file = new File(fullPath);
             return file.exists() ? "exists" : "not-exists";
@@ -25,18 +26,24 @@ public class TestStoryController {
     }
 
     @GetMapping("/file-create")
-    public String createFile(@RequestParam(name = "fileName") String fileName) {
-        String fullPath = "src/main/resources/templates/story/" + fileName;
+    public String createFile(@RequestParam(name = "fileName") String fileName,
+                             @RequestParam(name = "isDirectory", defaultValue = "true") boolean isDirectory) {
+//        String fullPath = "src/main/resources/templates/story/" + fileName;
+        String fullPath = fileName;
         try {
             File file = new File(fullPath);
             if(file.exists()) return "exists";
-            file.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            bw.write("This is new file");
-            bw.write("\nAuthor: lavanchuan");
-            bw.flush();
-            bw.close();
-            return "created-file";
+            if(!isDirectory) {
+                file.createNewFile();
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                bw.write("This is new file");
+                bw.write("\nAuthor: lavanchuan");
+                bw.flush();
+                bw.close();
+                return "created-file";
+            }
+            file.mkdir();
+            return "created-directory";
         } catch (Exception e) {
             return "error";
         }
@@ -44,7 +51,8 @@ public class TestStoryController {
 
     @GetMapping("/show-file")
     public String showFile(@RequestParam(name = "fileName") String fileName){
-        String fullPath = "src/main/resources/templates/story/" + fileName;
+//        String fullPath = "src/main/resources/templates/story/" + fileName;
+        String fullPath = fileName;
         try {
             File file = new File(fullPath);
             if(file.exists()) return "story/" + fileName.substring(0, fileName.indexOf("."));
