@@ -2,6 +2,7 @@ package com.chuan.crawldata.story.controllers;
 
 import com.chuan.crawldata.story.crawl.JsoupCrawler;
 import com.chuan.crawldata.story.models.requests.StoryLoadRequest;
+import com.chuan.crawldata.story.services.IOService;
 import com.chuan.crawldata.story.services.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,16 @@ public class StoryController {
 
     @Autowired
     private StoryService storyService;
+    @Autowired
+    private IOService ioService;
+
+    @GetMapping({"/", "init"})
+    public String initStory(){
+
+        ioService.initStoryDirect();
+
+        return "initing";
+    }
 
     @GetMapping("/story")
     public String story(){

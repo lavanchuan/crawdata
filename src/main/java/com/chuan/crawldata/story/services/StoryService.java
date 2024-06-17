@@ -34,7 +34,7 @@ public class StoryService {
             thread.start();
         }
 
-        return ResponseEntity.ok("//TODO SOMETHING");
+        return ResponseEntity.ok("Loading story, please await ♥♥♥");
     }
 
     public String getChapter(String name, int chapter) {
@@ -49,6 +49,6 @@ public class StoryService {
 //        request.setStoryName(name);
 //        loadStory(request);
 
-        return "story/chapter-await";
+        return "chapter-await";
     }
 }

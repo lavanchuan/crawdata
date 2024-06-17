@@ -12,13 +12,25 @@ import java.io.FileWriter;
 public class IOService {
 
     static final String ROOT_STORY_PATH = "src/main/resources/templates/story/";
+    static final String ROOT_SERVER = "/app/crawdata/story/";
 
     @Autowired
     FormatService formatService;
 
+    public void initStoryDirect(){
+        try {
+            File file = new File(ROOT_SERVER);
+            if(!file.exists()) file.mkdir();
+            System.out.println("SUCCESS: Load story directory");
+        } catch (Exception e) {
+            System.err.println("ERROR: Load story directory");
+        }
+    }
+
     public boolean isExists(String storyName) {
         try {
-            File file = new File(ROOT_STORY_PATH + storyName);
+//            File file = new File(ROOT_STORY_PATH + storyName);
+            File file = new File(ROOT_SERVER + storyName);
             if(file.exists() && file.isDirectory()) return true;
             return false;
         } catch (Exception e) {
@@ -28,9 +40,10 @@ public class IOService {
 
     public void createStoryDirect(String storyName) {
         try {
-            File file = new File(ROOT_STORY_PATH + storyName);
+//            File file = new File(ROOT_STORY_PATH + storyName);
+            File file = new File(ROOT_SERVER + storyName);
             file.mkdir();
-            System.out.println("CREATE DIRECTORY: " + storyName);
+            System.out.println("CREATE DIRECTORY: " + ROOT_SERVER + storyName);
         } catch (Exception e) {
             throw new RuntimeException();
         }
@@ -40,7 +53,8 @@ public class IOService {
         if(isChapterExists(storyName, chapter)) return;
 
 //        loadData();
-        String fileSrc = ROOT_STORY_PATH + storyName + "/" + chapter + ".html";
+//        String fileSrc = ROOT_STORY_PATH + storyName + "/" + chapter + ".html";
+        String fileSrc = ROOT_SERVER + storyName + "/" + chapter + ".html";
         try {
             File file = new File(fileSrc);
             writeFile(file, data);
@@ -67,7 +81,8 @@ public class IOService {
     }
 
     public boolean isChapterExists(String storyName, int chapter) {
-        String fileSrc = ROOT_STORY_PATH + storyName + "/" + chapter + ".html";
+//        String fileSrc = ROOT_STORY_PATH + storyName + "/" + chapter + ".html";
+        String fileSrc = ROOT_SERVER + storyName + "/" + chapter + ".html";
 
         try {
             File file = new File(fileSrc);
@@ -79,6 +94,6 @@ public class IOService {
     }
 
     public String getChapterFile(String name, int chapter) {
-        return "story/" + formatService.formatName(name) + "/" + chapter;
+        return ROOT_SERVER + formatService.formatName(name) + "/" + chapter;
     }
 }

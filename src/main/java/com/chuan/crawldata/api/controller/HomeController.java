@@ -16,18 +16,18 @@ public class HomeController {
     // INJECTION
     LoadStoryService storyService = new LoadStoryService();
 
-    @GetMapping("/")
-    ResponseEntity<?> homepage() {
-        loadStory();
-
-        // loadStoryDefault();
-
-        System.out.println("Load story success");
-
-        // return ResponseEntity.ok("homepage");
-        // return ResponseEntity.ok("story/vu-than-chua-te/a");
-        return ResponseEntity.ok("home");
-    }
+//    @GetMapping("/home")
+//    ResponseEntity<?> homepage() {
+//        loadStory();
+//
+//        // loadStoryDefault();
+//
+//        System.out.println("Load story success");
+//
+//        // return ResponseEntity.ok("homepage");
+//        // return ResponseEntity.ok("story/vu-than-chua-te/a");
+//        return ResponseEntity.ok("home");
+//    }
 
     /***
      * 
