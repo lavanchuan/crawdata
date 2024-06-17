@@ -102,10 +102,10 @@ public class TestStoryController {
     @GetMapping("/show-file")
     public String showFile(@RequestParam(name = "fileName") String fileName){
 //        String fullPath = "src/main/resources/templates/story/" + fileName;
-        String fullPath = fileName;
+        String fullPath = "/app/crawdata/story/"+fileName;
         try {
             File file = new File(fullPath);
-            if(file.exists()) return "story/" + fileName.substring(0, fileName.indexOf("."));
+            if(file.exists()) return "/app/crawdata/story/" + fileName.substring(0, fileName.indexOf("."));
             else return "not-exists";
         } catch (Exception e) {
             return "error";
