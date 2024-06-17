@@ -1,5 +1,6 @@
 package com.chuan.crawldata.story.controllers;
 
+import com.chuan.crawldata.story.services.IOService;
 import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -34,12 +35,12 @@ public class TestStoryController {
         try {
             File file = new File(fullPath);
             String res = "---";
-            if(file.exists()) {
+            if(file.exists() && file.isDirectory()) {
                 for(File f : file.listFiles()) {
                     if(f.isDirectory()) res = f.getName() + "\n" + res;
                     else res += "\n" + f.getName();
                 }
-            }
+            } else res = "exists";
             return ResponseEntity.ok(res);
         } catch (Exception e) {
             throw new RuntimeException();
@@ -102,10 +103,12 @@ public class TestStoryController {
     @GetMapping("/show-file")
     public String showFile(@RequestParam(name = "fileName") String fileName){
 //        String fullPath = "src/main/resources/templates/story/" + fileName;
-        String fullPath = "/app/crawdata/story/"+fileName;
+        String fullPath = IOService.ROOT_SERVER +fileName;
         try {
+            System.out.println("FULLPATH: " + fullPath);
             File file = new File(fullPath);
-            if(file.exists()) return "/app/crawdata/story/" + fileName.substring(0, fileName.indexOf("."));
+            System.out.println("FILE RESPONSE: " + IOService.ROOT_SERVER + fileName.substring(0, fileName.indexOf(".")));
+            if(file.exists()) return IOService.ROOT_SERVER + fileName.substring(0, fileName.indexOf("."));
             else return "not-exists";
         } catch (Exception e) {
             return "error";

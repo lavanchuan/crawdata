@@ -11,8 +11,8 @@ import java.io.FileWriter;
 @Service
 public class IOService {
 
-    static final String ROOT_STORY_PATH = "src/main/resources/templates/story/";
-    static final String ROOT_SERVER = "/app/crawdata/story/";
+    public static final String ROOT_STORY_PATH = "src/main/resources/templates/story/";
+    public static final String ROOT_SERVER = "/app/crawdata/story/";
 
     @Autowired
     FormatService formatService;
