@@ -21,6 +21,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 @Controller
 @RequestMapping("/story/test")
 public class TestStoryController {
@@ -101,7 +104,7 @@ public class TestStoryController {
     }
 
     @GetMapping("/show-file")
-    public String showFile(@RequestParam(name = "fileName") String fileName){
+    public String showFile(@RequestParam(name = "fileName", defaultValue = "1.txt") String fileName){
 //        String fullPath = "src/main/resources/templates/story/" + fileName;
         String fullPath = IOService.ROOT_SERVER +fileName;
         try {
@@ -123,6 +126,25 @@ public class TestStoryController {
         System.out.println("Đường dẫn: " + relativePath);
 
         return ResponseEntity.ok(relativePath);
+    }
+
+    /*
+    * GET FILE...
+    */
+    @GetMapping("/get-file")
+    public ResponseEntity<?> getFile(@RequestParam(name = "file", defaultValue = "vu-than-chua-te/1.txt") String file){
+        String fullPath = "/app/crawdata/story/";
+        String res = "";
+        try {
+            File f = new File(fullPath + file);
+            BufferedReader reader = new BufferedReader(new FileReader(f));
+            String line;
+            while((line = reader.readLine()) != null) res += line + "\n";
+        }
+        catch (Exception e) {
+            res = "ERROR";
+        }
+        return ResponseEntity.ok(res);
     }
 
 }
