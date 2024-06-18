@@ -15,4 +15,6 @@ public class CrawlerManager {
     public CrawlerManager(ICrawler crawler) {
         this.crawler = crawler;
     }
+
+    public setCrawler(ICrawler crawler) {this.crawler = crawler;}
 }
