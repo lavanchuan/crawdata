@@ -54,17 +54,75 @@ public class IOService {
 
 //        loadData();
 //        String fileSrc = ROOT_STORY_PATH + storyName + "/" + chapter + ".html";
-        String fileSrc = ROOT_SERVER + storyName + "/" + chapter + ".html";
+        String fileSrc = ROOT_SERVER + storyName + "/" + chapter;
         try {
-            File file = new File(fileSrc);
-            writeFile(file, data);
+            writeDataFile(fileSrc, data);
         } catch (Exception e) {
             throw new RuntimeException();
         }
     }
 
-    private void writeFile(File file, StoryChapterDTO data) {
+    private void writeDataFile(String fileSrc, StoryChapterDTO data) throws RuntimeException{
+        // write html file
+        writeHtlmFile(fileSrc, data);
+        // write txt file
+        writeTextFile(fileSrc, data);
+        // write json file
+        writeJsonFile(fileSrc, data);
+    }
+
+    private void writeJsonFile(String fileSrc, StoryChapterDTO data) {
         try {
+            File file = new File(fileSrc + ".json");
+            if(file.exists()) return;
+            file.createNewFile();
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+            String chapterNumber = String.format("chapterNumber: %d", data.getChapterNumber());
+            String chapterTitle = String.format("chapterTitle: %s", data.getChapterTitle());
+            String texts = "";
+
+            for(int i = 0; i < data.getTexts().size(); i++){
+                if(i == data.getTexts().size() - 1)
+                    texts += "text: " + data.getTexts().get(data.getTexts().size() - 1);
+                else texts += String.format("text: %s,\n", data.getTexts().get(i));
+            }
+
+            String dataFile = String.format("{%s,\n%s,\ntexts: [%s]}",
+                    chapterNumber, chapterTitle, texts);
+
+            bw.write(dataFile);
+            bw.flush();
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    private void writeTextFile(String fileSrc, StoryChapterDTO data) {
+        try {
+            File file = new File(fileSrc + ".txt");
+            if(file.exists()) return;
+            file.createNewFile();
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+            String dataFile = data.getChapterNumber() + "\n" + data.getChapterTitle();
+            for(String text : data.getTexts()) dataFile += text + "\n";
+
+            bw.write(dataFile);
+            bw.flush();
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    private void writeHtlmFile(String fileSrc, StoryChapterDTO data) {
+        try {
+            File file = new File(fileSrc + ".html");
+            if(file.exists()) return;
+            file.createNewFile();
+
             String head, body;
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             // header
