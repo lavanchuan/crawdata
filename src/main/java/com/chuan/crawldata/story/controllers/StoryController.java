@@ -50,4 +50,13 @@ public class StoryController {
                                      @RequestParam(name = "chapter", defaultValue = "1") int chapter){
         return storyService.getChapter(name, chapter);
     }
+
+    /*
+    * Show data
+    */
+    @GetMapping("/file)
+    public ResponseEntity<?> file(@RequestParam(name = "file", defaultValue= "file") String file){
+        String res = "RESPONSIVE";
+        return ResponseEntity.ok(res);
+    }
 }
