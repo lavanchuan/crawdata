@@ -16,5 +16,5 @@ public class CrawlerManager {
         this.crawler = crawler;
     }
 
-    public setCrawler(ICrawler crawler) {this.crawler = crawler;}
+    public void setCrawler(ICrawler crawler) {this.crawler = crawler;}
 }
