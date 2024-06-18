@@ -54,7 +54,7 @@ public class StoryController {
     /*
     * Show data
     */
-    @GetMapping("/file)
+    @GetMapping("/file")
     public ResponseEntity<?> file(@RequestParam(name = "file", defaultValue= "file") String file){
         String res = "RESPONSIVE";
         return ResponseEntity.ok(res);
